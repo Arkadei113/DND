@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Навигация</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+        }
+        .button-link {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Переход на другие страницы</h1>
+    <a href="Letters from Rath.html" class="button-link">Letters from Rath.html</a>
+    <a href="Letters from Rezmir.html" class="button-link">Letters from Rezmir.html</a>
+    <a href="Rath's Diary.html" class="button-link">Rath's Diary.html</a>
+    <a href="Rezmir's Diary.html" class="button-link">Rezmir's Diary.html</a>
+    <a href="Sandesil Morgue's Diary.html" class="button-link">Sandesil Morgue's Diary.html</a>
+</div>
+
+</body>
+</html>

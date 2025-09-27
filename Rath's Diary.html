@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дневник Резмир</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Marck+Script&display=swap');
+
+        body {
+            background-color: #333;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Marck Script', serif;
+            color: #2c2c2c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .book {
+            width: 1080px;
+            height: 720px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+            box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .book-cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.ebayimg.com/images/g/fDMAAOSwUlRZu~Oa/s-l400.jpg'); /* Обложка с символом Культа */
+            background-size: cover;
+            background-position: center;
+            border-radius: 5px;
+            z-index: 10;
+            backface-visibility: hidden;
+            transform-origin: left;
+            transition: transform 1s;
+        }
+
+        .book:hover .book-cover {
+            transform: rotateY(-180deg);
+        }
+
+        .book-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            backface-visibility: hidden;
+            transform: rotateY(-180deg);
+            background-color: #f8f0e3; /* Цвет чистых страниц */
+        }
+
+        .book:hover .book-content {
+            transform: rotateY(0deg);
+        }
+
+        .page-pair {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+			font-size: 25px;
+        }
+
+        .page-pair.active {
+            opacity: 1;
+            z-index: 1;
+        }
+        
+        .page {
+            width: 50%;
+            height: 100%;
+            background-image: url('https://avatars.mds.yandex.net/i?id=61fdf0a8459e914b9ee46590eef665d2_l-5234328-images-thumbs&n=13'); /* Единый фон для всех страниц */
+            background-size: cover;
+            background-position: center;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            box-sizing: border-box;
+            line-height: 1.6;
+            overflow-y: auto;
+        }
+
+        .left-page {
+            border-right: 1px solid #d4c5b3;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+
+        .right-page {
+            border-left: 1px solid #d4c5b3;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        .page-content {
+            text-shadow: none; /* Убираем тень, чтобы текст был четким */
+            font-size: 1.1em;
+        }
+
+        .page-title {
+            text-align: right;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-family: 'Marck Script', serif; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="book">
+    <div class="book-cover"></div>
+    <div class="book-content">
+        <div class="page-pair active">
+            <div class="page left-page">
+                <div class="page-content">
+                    <div class="page-title">Refir akminkurai tiros normenoth</div>
+                    <p>Belankar ashjrakamas zekul karkun nagasraka akimkurai zennshi amanare sheekthrish sheekthrish akminkurai revos refir nortalesh benthadoom akris sorankar azrathud nortalesh burasadare revos karaman reesh naztheros azgala gular amanemodas sheetsah amanalar zennshi gulamir adare mordanas kurai matheredor gulamir al'rakeesh melarorah al'karkun zennshi refir archim archimtiros kazile al'amanare akris tiriosh belaros thorje revola akreesh melar belan revola burasadare naztheros enkilgular kamilgolad matheredor al'shudas modas</p>
+                </div>
+            </div>
+            <div class="page right-page">
+                <div class="page-content">
+                    <div class="page-title">Sheekthrish kurai mishun</div>
+                    <p>Kurai kazile azgalada tichar benthadoom enkil tiriosh al'shudas melarorah kazile al'gular azgala thorje amanare melar nagas akminkurai soran pathrebosh danashj zilthuras sorankar ban akris kamilgolad rakkan amanemodas enkilgular matheredor zennshi archim normenoth normenoth reesh zennshi ashjrakamas galar zennshi arakalada teamanare kirasath sheki shazakiel kirestalak adare soran akreesh rakkan mishunadare kanrethad akris enkilgular mannorgulan nagasraka kieldaz buras al'karaman arakal nortalesh revos</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-pair">
+            <div class="page left-page">
+                <div class="page-content">
+                    <div class="page-title">Maladath melarorah revos</div>
+                    <p>Galar arakal refir shudas matheredor melarorah enkilzar theramas akminkurai rakir zennshi enkil al'amanare gulamir sheki refir melar arakalada melar zekul arakal benthadoom zennrakkan refir matheredor ashjraka al'tichar burasadare ashjrethul amanare tiros al'matheredor thorje belankar thorje amanemodas rukadare melarorah akreesh shudas teamanare faramos al'kirestalak gulamir archimtiros shudas reesh rakkas al'benthadoom maev sheetsah sheetsah rakir al'rethul achor rukadare</p>
+                </div>
+            </div>
+            <div class="page right-page">
+                <div class="page-content">
+                    <div class="page-title">Sheekthrish ashjrethul reesh melarnagas</div>
+                    <p>Al'rakeesh al'kieldaz enkilzar galar zekul al'rethul nagasraka gulamir azgala ashjrethul galar ered al'mishun zennrakkan naztheros buras al'kazile archim naztheros naztheros modas maev tiros buras rakir sheki al'karaman al'azgalada ered karkun sheetsah al'urzul azgala achor archimtiros benthadoom akminkurai toralar karaman enkilgular melar enkilgular zennshi zennrakkan urzul rethule pathrebosh mishunadare burasadare</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-pair">
+            <div class="page left-page">
+                <div class="page-content">
+                    <div class="page-title">Akris ashjrakamas belan</div>
+                    <p>Kirasath sheki azgalada gulamir akminkurai enkilgular al'rakkas al'modas karaman ashjrakamas karkun burasadare zekulrakkas archimtiros naztheros zekulrakkas belan zennshi tichar revola kirasath normenoth soranaman rethule arakalada zilthuras maev soran belaros kamil maladath theramas rakir nortalesh arakalada maev kanrethad adare mannorgulan nortalesh al'archim ticharamir al'teamanare sheki al'maladath adare kirestalak al'amanemodas arakal buras archimtiros toralar</p>
+                </div>
+            </div>
+            <div class="page right-page">
+                <div class="page-content">
+                    <div class="page-title">Akminkurai enkilzar akimkurai</div>
+                    <p>Tiros soran tichar faramos arakalada al'burasadare belan ashjrakamas refir benthadoom melar shazakiel kirasath maladath benthadoom kanrethad sheki zennshi akris refir kanrethad refir amanemodas adare zennshi burasadare thorje archim al'nagasraka belaros maladath sheekthrish amanemodas zekulrakkas nagasraka ashjraka reesh rakeesh rethule amanalar kurai matheredor sheki matheredor urzul rethule kamilgolad al'amanemodas arakalada al'mannor gulamir pathrebosh enkil ticharamir ashjrethul romathis akminkurai soranaman mordanas rethul al'achor rakir kirestalak ashjrethul mordanas golad archimtiros archimtiros rakkas zennrakkan enkil melarorah rethule al'danashj golad ashjrethul al'kamilgolad mishunadare nash</p>
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
+</div>
+
+<script>
+    const book = document.querySelector('.book');
+    const pagePairs = document.querySelectorAll('.page-pair');
+    let currentPage = 0;
+
+    book.addEventListener('click', () => {
+        pagePairs[currentPage].classList.remove('active');
+        currentPage = (currentPage + 1) % pagePairs.length;
+        pagePairs[currentPage].classList.add('active');
+    });
+</script>
+
+</body>
+</html>

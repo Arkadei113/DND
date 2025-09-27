@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дневник Резмир</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Marck+Script&display=swap');
+
+        body {
+            background-color: #333;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Marck Script', serif;
+            color: #2c2c2c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .book {
+            width: 1080px;
+            height: 720px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+            box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .book-cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.ebayimg.com/images/g/fDMAAOSwUlRZu~Oa/s-l400.jpg'); /* Обложка с символом Культа */
+            background-size: cover;
+            background-position: center;
+            border-radius: 5px;
+            z-index: 10;
+            backface-visibility: hidden;
+            transform-origin: left;
+            transition: transform 1s;
+        }
+
+        .book:hover .book-cover {
+            transform: rotateY(-180deg);
+        }
+
+        .book-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            backface-visibility: hidden;
+            transform: rotateY(-180deg);
+            background-color: #f8f0e3; /* Цвет чистых страниц */
+        }
+
+        .book:hover .book-content {
+            transform: rotateY(0deg);
+        }
+
+        .page-pair {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+			font-size: 25px;
+        }
+
+        .page-pair.active {
+            opacity: 1;
+            z-index: 1;
+        }
+        
+        .page {
+            width: 50%;
+            height: 100%;
+            background-image: url('https://thumbs.dreamstime.com/b/old-paper-parchment-13773249.jpg'); /* Единый фон для всех страниц */
+            background-size: cover;
+            background-position: center;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            box-sizing: border-box;
+            line-height: 1.6;
+            overflow-y: auto;
+        }
+
+        .left-page {
+            border-right: 1px solid #d4c5b3;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+
+        .right-page {
+            border-left: 1px solid #d4c5b3;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        .page-content {
+            text-shadow: none; /* Убираем тень, чтобы текст был четким */
+            font-size: 1.1em;
+        }
+
+        .page-title {
+            text-align: right;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-family: 'Marck Script', serif; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="book">
+    <div class="book-cover"></div>
+    <div class="book-content">
+        <div class="page-pair active">
+            <div class="page left-page">
+                <div class="page-content">
+                    <div class="page-title">Запись 1</div>
+                    <p>Сегодня я встретилась с Северином. Его глаза горят фанатизмом, но в его словах есть сила. Он говорит, что Тиамат вернется, и мы, Культ Дракона, станем ее правой рукой. Моя преданность черным драконам сделала меня Вирмспикером, и я не подведу. Северин поручил мне собрать сокровища для великой кладки. Я чувствую, как тьма во мне растет, и это... правильно.</p>
+                </div>
+            </div>
+            <div class="page right-page">
+                <div class="page-content">
+                    <div class="page-title">Запись 2</div>
+                    <p>Фрулам Мондат доказала свою полезность. Она умна, но слишком привязана к своему полудракону, Лангдедросе. Его кодекс чести — слабость, но он силен и верен. Я поставила их во главе атаки на Гриннест. Это будет испытанием их преданности. Если они провалятся, я найду других. Тиамат не терпит слабаков.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-pair">
+            <div class="page left-page">
+                <div class="page-content">
+                    <div class="page-title">Запись 3</div>
+                    <p>Гриннест пал под натиском. Лангдедроса и Фрулам действовали четко, но я заметила, что Фрулам слишком полагается на своего чемпиона. Я отправила их в лагерь у города, чтобы подготовить следующую фазу — сбор сокровищ для Тиамат. Драконья кладка в пещерах под охраной. Никто не должен узнать о ней, пока не придет время.</p>
+                </div>
+            </div>
+            <div class="page right-page">
+                <div class="page-content">
+                    <div class="page-title">Запись 4</div>
+                    <p>Проклятье! Появились какие-то авантюристы. Они шныряют повсюду, мешая нашим планам. Фрулам доложила, что они напали на лагерь. Я приказала ей усилить охрану и отправить Лангдедросу разобраться с ними. Если он не справится, я сама вмешаюсь. Тиамат требует жертв, и я не позволю этим смертным разрушить наши планы.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-pair">
+            <div class="page left-page">
+                <div class="page-content">
+                    <div class="page-title">Запись 5</div>
+                    <p>Лангдедроса мертв. Фрулам сбежала, как трусливая крыса. Кладка яиц уничтожена. Это катастрофа! Я чувствую гнев Тиамат в своих венах. Эти авантюристы станут моими личными врагами. Я отправлюсь в Замок Неритар, чтобы восстановить контроль. Северин должен узнать об этом, но я не могу показать слабость. Нужно ускорить сбор сокровищ.</p>
+                </div>
+            </div>
+            <div class="page right-page">
+                <div class="page-content">
+                    <div class="page-title">Запись 6</div>
+                    <p>Северин вызвал меня в Храм Тиамат. Он говорит, что ритуал близок, но нам нужно больше силы. Потеря кладки — удар, но не конец. Я нашла новый способ укрепить нашу позицию. Артефакт в болотах Авантюристы все еще идут по моему следу. Я прикажу культистам устроить засаду.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-pair">
+            <div class="page left-page">
+                <div class="page-content">
+                    <div class="page-title">Запись 7</div>
+                    <p>Замок Неритар под моим контролем, но я чувствую, что время уходит. Северин настаивает на ускорении планов. Я отправила гонцов к другим Вирмспикерам, чтобы скоординировать наши действия. Если авантюристы доберутся до меня, они встретят свою смерть. Черная маска Тиамат на мне, и я готова к битве. Пусть попробуют остановить волю Королевы Драконов.</p>
+                </div>
+            </div>
+            <div class="page right-page">
+                <div class="page-content">
+                    <div class="page-title"></div>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const book = document.querySelector('.book');
+    const pagePairs = document.querySelectorAll('.page-pair');
+    let currentPage = 0;
+
+    book.addEventListener('click', () => {
+        pagePairs[currentPage].classList.remove('active');
+        currentPage = (currentPage + 1) % pagePairs.length;
+        pagePairs[currentPage].classList.add('active');
+    });
+</script>
+
+</body>
+</html>
