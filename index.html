@@ -9,32 +9,85 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            text-align: center;
+            padding: 50px;
+            background-color: #f4f4f9;
             margin: 0;
-            background-color: #f0f0f0;
         }
-        #passwordForm { max-width: 300px; margin: 0 auto; }
-        input[type="password"] { width: 100%; padding: 10px; margin: 10px 0; }
-        .button-link {
-            display: inline-block;
-            padding: 15px 30px;
-            margin: 10px;
-            text-decoration: none;
-            color: white;
-            background-color: #007bff;
-            border: none;
+        #passwordForm {
+            max-width: 300px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
             border-radius: 8px;
-            font-size: 18px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #error {
+            color: red;
+            margin-top: 10px;
+        }
+        #content {
+            display: none;
+            margin-top: 50px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .container h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .button-link {
+            display: block;
+            padding: 12px 20px;
+            margin: 10px 0;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            text-align: center;
+            transition: background 0.3s, transform 0.2s;
         }
         .button-link:hover {
-            background-color: #0056b3;
+            background: #0056b3;
+            transform: translateY(-2px);
         }
-        #content { display: none; margin-top: 50px; }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            .button-link {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -43,16 +96,18 @@
         <input type="password" id="passwordInput" placeholder="Пароль">
         <br>
         <button onclick="checkPassword()">Войти</button>
-        <p id="error" style="color: red; display: none;">Неверный пароль!</p>
+        <p id="error" style="display: none;">Неверный пароль!</p>
     </div>
 
-    <div class="container">
-        <h1>Переход на другие страницы</h1>
-        <a href="Letters from Rath.html" class="button-link">Письма Рат</a>
-        <a href="Letters from Rezmir.html" class="button-link">Письма резмир</a>
-        <a href="Rath's Diary.html" class="button-link">Дневник Рат</a>
-        <a href="Rezmir's Diary.html" class="button-link">Дневник Резмир</a>
-        <a href="Sandesil Morgue's Diary.html" class="button-link">Дневник Сандесиль Моргия</a>
+    <div id="content">
+        <div class="container">
+            <h1>Переход на другие страницы</h1>
+            <a href="Letters from Rath.html" class="button-link">Письма Рат</a>
+            <a href="Letters from Rezmir.html" class="button-link">Письма резмир</a>
+            <a href="Rath's Diary.html" class="button-link">Дневник Рат</a>
+            <a href="Rezmir's Diary.html" class="button-link">Дневник Резмир</a>
+            <a href="Sandesil Morgue's Diary.html" class="button-link">Дневник Сандесиль Моргия</a>
+        </div>
     </div>
 
     <script>
@@ -88,4 +143,3 @@
     </script>
 </body>
 </html>
-
