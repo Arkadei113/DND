@@ -47,9 +47,10 @@
             }
 
             const inputHash = CryptoJS.SHA256(input).toString();
-            const expectedHash = getExpectedHash(); 
+            console.log('Введённый хеш:', inputHash); // Для отладки
+            console.log('Ожидаемый хеш:', getExpectedHash()); // Для отладки
 
-            if (inputHash === expectedHash) {
+            if (inputHash === getExpectedHash()) {
                 document.getElementById('passwordForm').style.display = 'none';
                 document.getElementById('content').style.display = 'block';
                 document.getElementById('passwordInput').value = ''; // Очистка поля
@@ -63,7 +64,6 @@
             setTimeout(() => { document.getElementById('error').style.display = 'none'; }, 3000);
         }
 
-        // Пароль требуется каждый раз
         window.onload = function() {
             document.getElementById('passwordForm').style.display = 'block';
             document.getElementById('content').style.display = 'none';
@@ -71,4 +71,3 @@
     </script>
 </body>
 </html>
-
