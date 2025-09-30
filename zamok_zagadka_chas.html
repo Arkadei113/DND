@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Загадка Облачных Великанов</title>
+    <style>
+		@font-face {
+			font-family: 'Stick';
+			src: url('S:/DND/font/Galaktika.ttf') format('woff2'),
+			font-weight: normal;
+			font-style: normal;
+			font-display: swap;
+		}
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Stick', sans-serif;
+            background-image: url('https://avatars.mds.yandex.net/i?id=52e7ca0d3a3926559451cb7b0a2bccbf_l-5221602-images-thumbs&n=13');
+            background-size: 400px 400px;
+            background-repeat: repeat;
+            color: #f0e6d2;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .global-timer {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(10, 26, 42, 0.95);
+            color: #d4af37;
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 2px solid #d4af37;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+            z-index: 1000;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .global-timer .time-display {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 8px 0;
+            color: #f0e6d2;
+            letter-spacing: 1px;
+        }
+        
+        .add-hour-btn {
+            padding: 6px 12px;
+            font-size: 1rem;
+            background-color: #d4af37;
+            color: #0a1a2a;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Stick', sans-serif;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+            width: 100%;
+        }
+        
+        .add-hour-btn:hover {
+            background-color: #f0e6d2;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+        }
+        
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            background-color: rgba(10, 26, 42, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(74, 144, 165, 0.5);
+            margin: 20px;
+            border: 2px solid #d4af37;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.5s ease, transform 1.5s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .gold-text {
+            color: #d4af37;
+            font-size: 3rem;
+            margin-bottom: 30px;
+            text-shadow: 
+                0 0 10px rgba(212, 175, 55, 0.7),
+                -1px -1px 0 #000,
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000,
+                0 0 4px rgba(0, 0, 0, 0.8);
+            position: relative;
+            animation: glow 3s infinite alternate;
+            text-align: center;
+            transform: scaleY(1.2);
+            line-height: 1.4;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 
+                    0 0 10px rgba(212, 175, 55, 0.7),
+                    -1px -1px 0 #000,
+                    1px -1px 0 #000,
+                    -1px 1px 0 #000,
+                    1px 1px 0 #000,
+                    0 0 4px rgba(0, 0, 0, 0.8);
+            }
+            to {
+                text-shadow: 
+                    0 0 20px rgba(212, 175, 55, 1), 
+                    0 0 30px rgba(212, 175, 55, 0.8),
+                    -2px -2px 0 #000,
+                    2px -2px 0 #000,
+                    -2px 2px 0 #000,
+                    2px 2px 0 #000,
+                    0 0 6px rgba(0, 0, 0, 0.9);
+            }
+        }
+        
+        .legend-text {
+            font-size: 2rem;
+            color: #f0e6d2;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            text-shadow: 0 0 5px rgba(240, 230, 210, 0.5);
+        }
+
+        .cipher-text {
+            font-size: 2rem;
+            color: #f0e6d2;
+            line-height: 1.6;
+            text-shadow: 0 0 5px rgba(240, 230, 210, 0.5);
+            white-space: pre-wrap;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .cipher-highlight {
+            color: #d4af37;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
+        }
+        
+        .input-section {
+            margin: 30px 0;
+        }
+        
+        input {
+            padding: 10px 15px;
+            font-size: 1.2rem;
+            border: 2px solid #d4af37;
+            border-radius: 5px;
+            background-color: rgba(10, 26, 42, 0.9);
+            color: #f0e6d2;
+            font-family: 'Stick', sans-serif;
+            margin-right: 10px;
+            width: 150px;
+            box-sizing: border-box;
+        }
+        
+        textarea {
+            padding: 10px 15px;
+            font-size: 1.2rem;
+            border: 2px solid #d4af37;
+            border-radius: 5px;
+            background-color: rgba(10, 26, 42, 0.9);
+            color: #f0e6d2;
+            font-family: 'Stick', sans-serif;
+            margin-right: 10px;
+            width: 90%;
+            box-sizing: border-box;
+            height: 150px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            background-color: #d4af37;
+            color: #0a1a2a;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Stick', sans-serif;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background-color: #f0e6d2;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.8);
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(20, 40, 60, 0.7);
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .final-answer {
+            font-size: 1.5rem;
+            color: #d4af37;
+            margin-top: 20px;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
+        }
+        
+        .curved-text {
+            display: inline-block;
+            transform: perspective(500px) rotateX(25deg);
+            text-align: center;
+            padding: 20px 40px;
+            border-radius: 50% 50% 0 0;
+            background: linear-gradient(to bottom, rgba(212, 175, 55, 0.1), transparent);
+            margin-top: 100px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(10, 26, 42, 0.8);
+            color: #d4af37;
+            padding: 10px 15px;
+            border-radius: 10px;
+            border: 2px solid #d4af37;
+            font-size: 1.6rem;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+            display: none;
+            z-index: 1000;
+        }
+
+        .final-container {
+			display: none;
+			flex-direction: column;
+			max-width: 1000px;
+			width: 90%;
+			margin: 20px auto;
+			align-items: center;
+		}
+
+		.item-block {
+			display: flex;
+			background-color: rgba(10, 26, 42, 0.9);
+			border: 2px solid #d4af37;
+			border-radius: 15px;
+			margin: 20px 0;
+			padding: 20px;
+			box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+			opacity: 0;
+			transform: translateY(30px);
+			transition: all 0.8s ease;
+			width: 100%;
+			min-height: 400px;
+			box-sizing: border-box;
+		}
+
+		.item-block.visible {
+			opacity: 1;
+			transform: translateY(0);
+		}
+
+		.image-section {
+			flex: 0 0 300px;
+			margin-right: 30px;
+		}
+
+		.image-preview {
+			width: 300px;
+			height: 300px;
+			border: 2px solid #d4af37;
+			border-radius: 10px;
+			background-color: rgba(20, 40, 60, 0.7);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			overflow: hidden;
+		}
+
+		.image-preview img {
+			max-width: 100%;
+			max-height: 100%;
+			object-fit: cover;
+		}
+
+		.info-section {
+			flex: 1;
+			text-align: left;
+			min-height: 350px;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.info-section h3 {
+			color: #d4af37;
+			margin-bottom: 15px;
+			font-size: 1.5rem;
+		}
+
+		.info-section h4 {
+			color: #d4af37;
+			margin: 15px 0 8px 0;
+			font-size: 1.2rem;
+		}
+
+		.info-section .info-text {
+			font-size: 1.1rem;
+			color: #f0e6d2;
+			line-height: 1.5;
+			white-space: pre-wrap;
+			margin-bottom: 10px;
+			flex: 1;
+		}
+
+		.completion-message {
+			font-size: 2rem;
+			color: #d4af37;
+			text-align: center;
+			margin: 30px 0;
+			text-shadow: 0 0 15px rgba(212, 175, 55, 0.8);
+			animation: glow 2s infinite alternate;
+			width: 100%;
+		}
+    </style>
+</head>
+<body>
+    <div class="global-timer" id="global-timer">
+        <div>Время начала:</div>
+        <div id="start-time">--:--:--</div>
+        <div>Осталось времени:</div>
+        <div class="time-display" id="global-time">02:00:00</div>
+        <button class="add-hour-btn" onclick="addHour()">Добавить час</button>
+    </div>
+    
+    <div class="timer" id="timer">Загадка появится через: 00:10</div>
+    
+    <div class="curved-text" id="curved-text">
+        <div class="gold-text" id="riddle-title">
+            Сложи числа, что хранят легенды, и найди ключ, что сдвинет руны к следующему испытанию, как ветра, кружащие вокруг башен замка
+        </div>
+    </div>
+    
+    <div class="container" id="riddle-container">
+        <div class="legend-text" id="riddle-text">
+            Три могучих великана охраняют небесный замок: первый держит пять молний, второй сражается с четырьмя драконами, третий возвышается над двумя бурями.
+        </div>
+        
+        <div class="input-section">
+            <input type="number" id="key-input" placeholder="Введите ключ (число)">
+            <button onclick="checkKey()">Ключ</button>
+        </div>
+    </div>
+
+    <div class="container" id="second-riddle-container" style="display:none;">
+        <div class="cipher-text" id="cipher-text">
+            Тк ьэщцщч, ноп цжиэьй ыпху чрок, ьуойэ ъйэж мпцухкшщм, вжу учпшк - защ оыпмшуа цпнпшо.<br>
+            <span class="cipher-highlight">•	Мпвшёф Ьэыкс мщььпокпэ шк эыщшп, ъщоопысумкпчщч щъщыкчу чуык, вжй чщдж щэыкспшк мщ мьпа юнцка тпчцу.</span><br>
+            <span class="cipher-highlight">•	Мэщыщф - пнщ шпыктцювшкй Эпшж, Лыкэ-лцутшпб, вэщ чцкогп пнщ, шщ мьпнок ьцпоюпэ тк шуч ъщ ъйэкч, у уа поушьэмщ - хкх ьмпэ у шщвж.</span><br>
+            <span class="cipher-highlight">•	Эыпэуф - Мпцухкш-Щэыкспшуп, вэщ ъщмэщыйпэ ъюэж, ъыщфопшшёф ъпымёч, у пнщ ьуцк - хкх мэщыщп оёакшуп чуыщтокшуй.</span><br>
+            <span class="cipher-highlight">•	Впэмрыэёф - Хщыщцж-Хютшпб, вэщ мёхщмкц чщцщэ у мцщсуц м ьпыобк мьпа ьщтокшуф уьхыё, вэщ ьэкцу уа ьюдшщьэжи.</span><br>
+            <span class="cipher-highlight">•	Ъйэёф - Аыкшуэпцж Шплк, вэщ опысуэ шк ьмщуа ъцпвка мьп шплпьшёп ьмпэуцк, вжр вуьцщ ьпнок ьвуэкцщьж ьучмщцщч лпьхщшпвшщф ьуцё у ткмпыгршшщьэу.</span>
+        </div>
+        <div class="input-section">
+            <textarea id="cipher-input" placeholder="Введите разгаданный текст"></textarea>
+            <button onclick="checkCipher()">Проверить шифр</button>
+        </div>
+    </div>
+
+    <div class="container" id="third-riddle-container" style="display:none;">
+        <div class="cipher-text" id="solved-text-display"></div>
+        <div class="input-section" id="third-input-section">
+            <div class="legend-text">
+                Введите последовательность чисел
+            </div>
+            <input type="text" id="numbers-input" placeholder="Введите последовательность">
+            <button onclick="checkNumbers()">Проверить</button>
+        </div>
+    </div>
+
+    <div class="final-container" id="final-container">
+        <div class="completion-message">
+            🎉 Поздравляем! Вы открыли сокровищницу облачных великанов! 🎉
+        </div>
+        
+			<div class="item-block" id="item-block-1">
+				<div class="image-section">
+					<div class="image-preview" id="image-preview-1">
+						<img src="https://sun9-87.userapi.com/s/v1/ig2/KOzhCWbIBckXifSgfkPwiqhAYSL4QDOlSyL51fRFkIUskfuLLVhMwRn4gAkMpErrYFh0qQgHAUJNq4oM0Jmwa_lq.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1024x1024&from=bu&cs=1024x0" alt="Рог Призыва Штормового Вихря">
+					</div>
+				</div>
+				<div class="info-section">
+					<h3>Рог Призыва Штормового Вихря</h3>
+					
+					<h4>Описание</h4>
+					<div class="info-text">Этот массивный рог, вырезанный из клыка древнего ледникового червя и оправленный в сияющую стигийскую бронзу, испещрен рунами, повествующими о власти великанов над ветром и погодой. При прикосновении он кажется холодным, а если приложить его к уху, можно услышать отдаленный завывающий ветер.</div>
+					
+					<h4>Особенности</h4>
+					<div class="info-text">Рог был создан королем-жрецем великанов для призыва и контроля над могущественными воздушными элементалями, известными как Штормовые Вихри. Он не просто призывает существо, а создает с ним мистическую связь. Однако, за долгие века забвения, заклятье контроля над элементалем ослабло, сделав его непредсказуемым и опасным.</div>
+					
+					<h4>Характеристики</h4>
+					<div class="info-text"><strong>Тип:</strong> Магический предмет (требует настройки)<br><strong>Вес:</strong> 8 фунтов<br><strong>Заряды:</strong> Рог имеет 3 заряда. Все заряды восстанавливаются на рассвете.<br><strong>Действия:</strong><br><strong>Волна грома (1 заряд):</strong> Вы можете действием использовать рог, чтобы сотворить заклинание Волна грома. Сложность спасброска равна 15.<br> <strong>Разрушительная волна (2 заряда):</strong> Вы сильно дуете, создавая волну, исходящей от вас (30 футов радиус). Все существа, выбранные вами в пределах 30 футов, должны преуспеть в спасброске Телосложения (15), иначе они получат 5д6 урона звуком <br> <strong>Призыв Вихря (3 заряда):</strong> Вы можете действием потратить 3 заряда, чтобы протрубить в рог и произнести команду на языке великанов. На свободном пространстве в пределах 60 футов от вас появляется Штормовой Вихрь (используйте статистику Воздушного Элементаля, но с следующими изменениями:<br>• Он получает бонус +2 к броскам урона.<br>• Каждый раз, когда существо начинает свой ход в пределах 10 футов от вихря или впервые за ход попадает по нему атакой, оно должно совершить спасбросок Телосложения (Сл 14) или стать оглушенным до начала своего следующего хода из-за оглушительного рева ветра<br>• Особое свойство (Проклятие): При призыве, бросьте д6. На результате 1, Штормовой Вихрь выходит из-под контроля. В свой первый ход он автоматически атакует ближайшее существо (включая того, кто его призвал), а затем начинает бесконтрольно разрушать все вокруг, не подчиняясь командам. Контроль над разумом на него не действует.
+				</div>
+			</div>
+		</div>
+
+		<div class="item-block" id="item-block-2">
+            <div class="image-section">
+                <div class="image-preview" id="image-preview-2">
+                    <img src="https://sun9-72.userapi.com/s/v1/ig2/M8fDJQM-pxpqDJeaXy8076Ip3_o-xtzzSg3Sva-946EHWwSXnGQcWR5H8k86EIz3gIHqRyFK1REwxtaTwEX8Ylon.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1024x1024&from=bu&cs=1024x0" alt="Молот Громового Наследия">
+                </div>
+            </div>
+            <div class="info-section">
+                <h3>Молот Громового Наследия </h3>
+                
+                <h4>Описание</h4>
+                <div class="info-text">Этот огромный боевой молот, сделанный для существа ростом с великана, тем не менее, кажется невероятно легким в руках того, кто умеет с ним обращаться. Его древко вырезано из сердца облачного дуба — дерева, что растет только на самых высоких пиках, а массивная головка отлита из бледного, испещренного молниями металла, известного как "небесное железо". При ударе он издает не звон, а низкий, нарастающий гул, предвещающий гром.</div>
+                
+                <h4>Особенности</h4>
+                <div class="info-text">Молот был создан для чемпионов Облачных Великанов — тех, кто защищал их цитадели в небесах. Он не просто наносит удары, он концентрирует и высвобождает кинетическую энергию и звуковые волны, превращая каждый взмах в миниатюрную бурю. Легенды гласят, что если ударить им по земле с достаточной силой, можно вызвать раскат грома, слышный за много миль.</div>
+                
+                <h4>Характеристики</h4>
+                <div class="info-text"><strong>Тип:</strong> Магическое оружие (дробящее), очень редкое (требует настройки), тяжелое, двуручное.<br><strong>Вес:</strong> 16 фунтов (вопреки своим размерам, магическая легкость делает его пригодным для использования существами среднего и крупного размера).<br><strong>Характеристики оружия:</strong> Урон: 2к6 дробящего урона + 1к6 урона звуком.<br><strong>Свойства:</strong><br><strong>Наследник Бури:</strong> Вы получаете сопротивление к урону электричеством, пока держите молот в руках.<br><strong>Громовой Удар:</strong>Когда вы попадаете по существу атакой этим оружием, вы можете потратить заряды, чтобы усилить удар. Выберите один из эффектов.<br><strong>Отталкивающий Гул (1 заряд):</strong>Цель должна преуспеть в спасброске Силы (Сл 15), иначе будет оттолкнута на 10 футов от вас.<br><strong>Раскат Грома (2 заряда):</strong>Вместо обычного урона звуком, вы наносите 2к8 урона звуком, и цель должна преуспеть в спасброске Телосложения (Сл 15), иначе будет оглушена до конца своего следующего хода. Гром слышен в радиусе 300 футов.<br><strong>Заряды:</strong>Молот имеет 3 заряда. Он восстанавливает 1к4 потраченных зарядов каждый рассвет. Если вы потратите последний заряд, бросьте д20. При выпадении 1, молот теряет все магические свойства на 24 часа, и его головка становится матово-серой и безмолвной
+				</div>
+            </div>
+        </div>
+
+        <div class="item-block" id="item-block-3">
+            <div class="image-section">
+                <div class="image-preview" id="image-preview-3">
+                    <img src="https://sun9-28.userapi.com/s/v1/ig2/qpcHcXDquolB6BSO5XuQ3RYixW5n7n2aXokMdTU2QNd4b2FBlBcghnR-0UP_lyL0i9jJBz6hZXV9sSi99fPLDGdt.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1024x1024&from=bu&cs=1024x0" alt="Сфера Хрономанта">
+                </div>
+            </div>
+            <div class="info-section">
+                <h3>Сфера Застывшего Времени</h3>
+                
+                <h4>Описание</h4>
+                <div class="info-text">Идеально гладкая сфера из чистого, абсолютно прозрачного хрусталя, размером с человеческую голову. Внутри нее, словно в ловушке, замерла небольшая бабочка с крыльями, отливающими облачной лазурью. Бабочка не мертва — она абсолютно неподвижна, и если присмотреться, можно увидеть, что пыльца на ее крыльях медленно-медленно, за столетия, смещается на миллиметр.</div>
+                
+                <h4>Особенности</h4>
+                <div class="info-text">Этот артефакт — результат неудачного эксперимента могущественного великанского хрономанта. Он пытался создать карман вне времени для хранения скоропортящихся вещей, но заклинание вышло из-под контроля и "запечатало" сам момент своего создания. Сфера не поддается физическому воздействию — по ней нельзя поставить даже царапину. Однако мощные заклинания, манипулирующие временем (например, остановка времени) или разрывающие пространство (например, рассеивание магии высшего уровня), могут нарушить ее хрупкий баланс.</div>
+                
+                <h4>Характеристики</h4>
+                <div class="info-text"><strong>Тип:</strong> Артефакт (уникальный)<br><strong>Вес:</strong> 0 фунтов (она невесома, пока запечатана, но ее невозможно сдвинуть с места силой).<br><strong>Свойства:</strong><br><strong>Неподвижность:</strong> Сфера закреплена в пространстве. Ее невозможно сдвинуть никакой физической силой. Попадание по ней любым оружием не наносит урона.<br><strong>Иммунитет к магии:</strong> На сферу не действуют заклинания ниже 6-го уровня. Заклинания более высоких уровней, нацеленные на нее, требуют проверки характеристики с Сл 18.<br><strong>Эффект при разрушении/вскрытии:</strong><br>• Если сфера будет уничтожена или вскрыта с помощью магии (например, успешное применение рассеивания магии 9-го уровня или разрыва по самой сфере), заклинание времени, хранимое внутри, высвобождается.<br>• Все существа в радиусе 30 футов от сферы должны совершить спасбросок Ловкости (Сл 17). При провале существо оказывается под действием усовершенствованного заклинания Остановка времени на 2 ход. В течение этого времени оно не может совершать действия, перемещаться, его невозможно атаковать или нанести ему урон, оно не осознает течение времени. <br>• Сама бабочка, будучи ядром заклинания, мгновенно стареет и превращается в пыль. На ее месте на мгновение появляется сияющий временной вихрь, и каждый, кто провалил спасбросок, получает случайное кратковременное проклятие (на 1d20 лет стареет, или, наоборот, молодеет, теряя опыт, или начинает периодически "застревать" на несколько секунд во времени). Это длится на протяжение суток, потом все вернется на свое время, ибо всегда должен быть балнс</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let totalTime = 2 * 60 * 60 * 1000;
+        let startTime = Date.now();
+        let globalTimerInterval;
+        
+        function formatTime(ms) {
+            const hours = Math.floor(ms / (1000 * 60 * 60));
+            const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((ms % (1000 * 60)) / 1000);
+            
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        function updateGlobalTimer() {
+            const elapsed = Date.now() - startTime;
+            const remaining = totalTime - elapsed;
+            
+            if (remaining <= 0) {
+                clearInterval(globalTimerInterval);
+                window.location.href = 'https://pcpi.tilda.ws/23';
+                return;
+            }
+            
+            document.getElementById('global-time').textContent = formatTime(remaining);
+        }
+        
+		function startGlobalTimer() {
+            const now = new Date();
+            const startTimeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+            document.getElementById('start-time').textContent = startTimeString;
+            
+            updateGlobalTimer();
+            globalTimerInterval = setInterval(updateGlobalTimer, 1000);
+        }
+        
+        function addHour() {
+            totalTime += 60 * 60 * 1000;
+            updateGlobalTimer();
+        }
+        
+        function showRiddle() {
+            const container = document.getElementById('riddle-container');
+            container.classList.add('visible');
+            const timer = document.getElementById('timer');
+            timer.style.display = 'none';
+        }
+
+        function startCountdown() {
+            let timeLeft = 10;
+            const timerElement = document.getElementById('timer');
+            timerElement.style.display = 'block';
+            
+            const countdown = setInterval(function() {
+                const seconds = timeLeft % 60;
+                timerElement.textContent = `Загадка появится через: 00:${seconds.toString().padStart(2, '0')}`;
+                timeLeft--;
+                
+                if (timeLeft < 0) {
+                    clearInterval(countdown);
+                    showRiddle();
+                }
+            }, 1000);
+        }
+
+        function startSecondCountdown() {
+            let timeLeft = 10;
+            const timerElement = document.getElementById('timer');
+            timerElement.style.display = 'block';
+            timerElement.textContent = 'Загадка появится через: 00:10';
+            
+            const countdown = setInterval(function() {
+                const seconds = timeLeft % 60;
+                timerElement.textContent = `Загадка появится через: 00:${seconds.toString().padStart(2, '0')}`;
+                timeLeft--;
+                
+                if (timeLeft < 0) {
+                    clearInterval(countdown);
+                    timerElement.style.display = 'none';
+                    document.getElementById('second-riddle-container').style.display = 'block';
+                    document.getElementById('second-riddle-container').classList.add('visible');
+                }
+            }, 1000);
+        }
+
+        function startThirdCountdown() {
+            let timeLeft = 10;
+            const timerElement = document.getElementById('timer');
+            timerElement.style.display = 'block';
+            timerElement.textContent = 'Новая загадка появится через: 00:10';
+
+            const countdown = setInterval(function() {
+                const seconds = timeLeft % 60;
+                timerElement.textContent = `Новая загадка появится через: 00:${seconds.toString().padStart(2, '0')}`;
+                timeLeft--;
+
+                if (timeLeft < 0) {
+                    clearInterval(countdown);
+                    timerElement.style.display = 'none';
+                    document.getElementById('third-riddle-container').style.display = 'block';
+                    document.getElementById('third-riddle-container').classList.add('visible');
+                }
+            }, 1000);
+        }
+        
+        function checkKey() {
+            const keyInput = document.getElementById('key-input').value;
+            const correctKey = 11;
+            
+            if (parseInt(keyInput) === correctKey) {
+                alert('Правильно! Ключ верный. Загадка разгадана!');
+                
+                document.getElementById('riddle-container').style.display = 'none';
+                document.getElementById('riddle-title').textContent = 'Разгадай шифр, сдвинутый на число, что открыли легенды, как молнии, что освещают путь в бурю. Получи цитату, что укажет на цифры и их порядок за пиршественным столом великанов';
+
+                startSecondCountdown();
+            } else {
+                alert('Неверный ключ. Попробуйте еще раз.');
+            }
+        }
+        
+        function checkCipher() {
+            const cipherInput = document.getElementById('cipher-input').value;
+            const correctCipher = "За столом, где льются реки мёда, сидят пять великанов, чьи имена - эхо древних легенд.\n•	Вечный Страж восседает на троне, поддерживаемом опорами мира, чья мощь отражена во всех углах земли.\n•	Второй - его неразлучная Тень, Брат-близнец, что младше его, но всегда следует за ним по пятам, и их единство - как свет и ночь.\n•	Третий - Великан-Отражение, что повторяет путь, пройденный первым, и его сила - как второе дыхание мироздания.\n•	Четвёртый - Король-Кузнец, что выковал молот и вложил в сердца всех созданий искры, что стали их сущностью.\n•	Пятый - Хранитель Неба, что держит на своих плечах все небесные светила, чьё число всегда считалось символом бесконечной силы и завершённости.";
+
+            const normalizeString = (str) => {
+                return str
+                    .replace(/[\r\n\t]/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+            };
+
+            const normalizedInput = normalizeString(cipherInput);
+            const normalizedCorrect = normalizeString(correctCipher);
+            
+            if (normalizedInput === normalizedCorrect) {
+                alert('Поздравляю! Вы разгадали тайну!');
+                document.getElementById('second-riddle-container').style.display = 'none';
+                document.getElementById('riddle-title').textContent = 'Разгадав всё, собери цифры в последовательность, указанную цитатой, и найди число, что откроет сокровищницу облачных великанов, скрытую в сердце их небесного замка. Пусть твоя отвага будет столь же велика, как сами хозяева облаков!';
+                document.getElementById('solved-text-display').innerText = correctCipher;
+                startThirdCountdown();
+            } else {
+                alert('Неверный текст. Попробуйте еще раз.');
+            }
+        }
+
+        function checkNumbers() {
+            const numbersInput = document.getElementById('numbers-input').value;
+            const correctNumbers = "42468";
+
+            if (numbersInput === correctNumbers) {
+                alert('Правильно! Вы прошли все испытания и открыли сокровищницу!');
+                showFinalBlocks();
+            } else {
+                alert('Неверная последовательность. Попробуйте еще раз.');
+            }
+        }
+
+        function showFinalBlocks() {
+            document.getElementById('timer').style.display = 'none';
+            document.querySelector('.curved-text').style.display = 'none';
+            document.getElementById('riddle-container').style.display = 'none';
+            document.getElementById('second-riddle-container').style.display = 'none';
+            document.getElementById('third-riddle-container').style.display = 'none';
+            
+            document.getElementById('final-container').style.display = 'flex';
+            
+            setTimeout(() => {
+                document.getElementById('item-block-1').classList.add('visible');
+            }, 300);
+            
+            setTimeout(() => {
+                document.getElementById('item-block-2').classList.add('visible');
+            }, 600);
+            
+            setTimeout(() => {
+                document.getElementById('item-block-3').classList.add('visible');
+            }, 900);
+        }
+        
+        window.onload = function() {
+            startGlobalTimer();
+            startCountdown();
+        };
+    </script>
+</body>
+</html>
