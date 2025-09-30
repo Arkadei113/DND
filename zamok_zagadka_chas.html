@@ -344,6 +344,32 @@
 			animation: glow 2s infinite alternate;
 			width: 100%;
 		}
+		
+		.hint-section {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			margin-top: 20px;
+		}
+
+		.hint-button {
+			background-color: #4a90a5;
+			color: #f0e6d2;
+			margin-bottom: 10px;
+		}
+
+		.hint-button:hover {
+			background-color: #5aa0b5;
+			box-shadow: 0 0 10px rgba(74, 144, 165, 0.8);
+		}
+
+		.hint-image {
+			max-width: 300px;
+			max-height: 200px;
+			border: 2px solid #d4af37;
+			border-radius: 5px;
+			display: none;
+		}
     </style>
 </head>
 <body>
@@ -386,6 +412,10 @@
         <div class="input-section">
             <textarea id="cipher-input" placeholder="Введите разгаданный текст"></textarea>
             <button onclick="checkCipher()">Проверить шифр</button>
+        </div>
+		<div class="hint-section">
+            <button class="hint-button" onclick="toggleHint()">Подсказка</button>
+            <img id="hint-image" class="hint-image" src="https://schoolfiles.ru/wp-content/uploads/2020/07/01-alfavit-russkij-1024x724.jpg" alt="Русский алфавит">
         </div>
     </div>
 
@@ -612,6 +642,15 @@
                 alert('Неверный текст. Попробуйте еще раз.');
             }
         }
+		
+		function toggleHint() {
+			const hintImage = document.getElementById('hint-image');
+			if (hintImage.style.display === 'none' || hintImage.style.display === '') {
+				hintImage.style.display = 'block';
+			} else {
+				hintImage.style.display = 'none';
+			}
+		}
 
         function checkNumbers() {
             const numbersInput = document.getElementById('numbers-input').value;
