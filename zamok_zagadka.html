@@ -5,7 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Загадка Облачных Великанов</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Stick&display=swap');
+	
+		@font-face {
+			font-family: 'Stick';
+			src: url('font/Galaktika.ttf') format('woff2'),
+			font-weight: normal;
+			font-style: normal;
+			font-display: swap;
+		}
         
         body {
             margin: 0;
@@ -44,7 +51,7 @@
         
         .gold-text {
             color: #d4af37;
-            font-size: 1.8rem;
+            font-size: 3rem;
             margin-bottom: 30px;
             text-shadow: 
                 0 0 10px rgba(212, 175, 55, 0.7),
@@ -85,7 +92,7 @@
         }
         
         .legend-text {
-            font-size: 1.5rem;
+            font-size: 2rem;
             color: #f0e6d2;
             margin-bottom: 30px;
             line-height: 1.6;
@@ -93,7 +100,7 @@
         }
 
         .cipher-text {
-            font-size: 1.2rem;
+            font-size: 2rem;
             color: #f0e6d2;
             line-height: 1.6;
             text-shadow: 0 0 5px rgba(240, 230, 210, 0.5);
@@ -191,12 +198,11 @@
             padding: 10px 15px;
             border-radius: 10px;
             border: 2px solid #d4af37;
-            font-size: 1.2rem;
+            font-size: 1.6rem;
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
             display: none;
         }
 
-        /* Стили для финальных блоков с картинками */
         .final-container {
 			display: none;
 			flex-direction: column;
