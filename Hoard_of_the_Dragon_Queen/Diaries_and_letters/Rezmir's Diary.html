@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дневник Резмир</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Marck+Script&display=swap');
+
+        body {
+            background-color: #333;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Marck Script', serif;
+            color: #2c2c2c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .book {
+            width: 1080px;
+            height: 720px;
+            position: relative;
+            box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+            background-color: #f8f0e3;
+            border-radius: 5px;
+        }
+
+        .book-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .page-pair {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+            font-size: 25px;
+        }
+
+        .page-pair.active {
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 1;
+        }
+        
+        .page {
+            width: 50%;
+            height: 100%;
+            background-image: url('https://thumbs.dreamstime.com/b/old-paper-parchment-13773249.jpg');
+            background-size: cover;
+            background-position: center;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            box-sizing: border-box;
+            line-height: 1.6;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .left-page {
+            border-right: 1px solid #d4c5b3;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+
+        .right-page {
+            border-left: 1px solid #d4c5b3;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        .page-content {
+            text-shadow: none;
+            font-size: 1.1em;
+            text-align: justify;
+        }
+
+        .page-title {
+            text-align: right;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-family: 'Marck Script', serif; 
+        }
+
+        .nav-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 20;
+        }
+
+        .nav-btn {
+            background-color: rgba(0, 0, 0, 0.4);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .nav-btn:disabled {
+            background-color: rgba(0, 0, 0, 0.2);
+            cursor: not-allowed;
+        }
+        
+        .illustration {
+            width: 100%;
+            max-width: 1000px;
+            height: auto;
+            margin: 15px auto;
+            display: block;
+            border-radius: 3px;
+        }
+
+        .illustration-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="book">
+    <div class="book-content">
+        <div class="page-pair active">
+            <div class="page left-page">
+                <div class="page-content">
+                    <div class="page-title">Запись 1</div>
+                    <p>Сегодня я встретилась с Северином. Его глаза горят фанатизмом, но в его словах есть сила. Он говорит, что Тиамат вернется, и мы, Культ Дракона, станем ее правой рукой. Моя преданность черным драконам сделала меня Вирмспикером, и я не подведу. Северин поручил мне собрать сокровища для великой кладки. Я чувствую, как тьма во мне растет, и это... правильно.</p>
+                </div>
+            </div>
+            <div class="page right-page">
+                <div class="illustration-container">
+                    <img src="https://psv4.userapi.com/s/v1/d2/IscJ-9pci37QlenTkhYlYl5CEZ8kXoiuufMl95_8wLBeBNIKcYH6hI0bX3i4pDBq5fElC188tOco85ch3WS_UxtApAPNirY8JTZv3M5TSWmCkGGrPch9423TBgW8Qj_f-o47JdLqFvKk/1.png" alt="Иллюстрация" class="illustration">
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-pair">
+            <div class="page left-page">
+                <div class="page-content">
+                    <div class="page-title">Запись 2</div>
+                    <p>Фрулам Мондат доказала свою полезность. Она умна, но слишком привязана к своему полудракону, Лангдедросе. Его кодекс чести — слабость, но он силен и верен. Я поставила их во главе атаки на Гриннест. Это будет испытанием их преданности. Если они провалятся, я найду других. Тиамат не терпит слабаков.</p>
+                </div>
+            </div>
+            <div class="page right-page">
+                <div class="illustration-container">
+                    <img src="https://psv4.userapi.com/s/v1/d2/YL63CMZynzXrdgUAcoFBFS9SS0fGbZJDjrg8I1-Pi0wuWHV-y8ypx2iKqsy5bbF6yH_YjJxYPMN5xyQIMFJ1WL0OM_s9FHH_5Aiux1n12E4TfuYbG-NQ3WhwQ2l6uwaGVOzGhuZc5Lur/2.png" alt="Иллюстрация" class="illustration">
+                </div>
+            </div>
+        </div>
+
+        <div class="page-pair">
+            <div class="page left-page">
+                <div class="page-content">
+                    <div class="page-title">Запись 3</div>
+                    <p>Гриннест пал под натиском. Лангдедроса и Фрулам действовали четко, но я заметила, что Фрулам слишком полагается на своего чемпиона. Я отправила их в лагерь у города, чтобы подготовить следующую фазу — сбор сокровищ для Тиамат. Драконья кладка в пещерах под охраной. Никто не должен узнать о ней, пока не придет время.</p>
+                </div>
+            </div>
+            <div class="page right-page">
+                <div class="illustration-container">
+                    <img src="https://psv4.userapi.com/s/v1/d2/B6oDKiBS_Dop4f_2QYzcjA2bxEcRsR5eRIQVHWf5XZWAFH3u6PAVE9FNMDGOKH-WTWYDoUgnIzkSi7kb9k8tDv9VOpUKEuPyHXJUnO2vs_N5_mjEXX5uKQp7wmL6sTnTKYdw2RTzdd1_/3.png" alt="Иллюстрация драконьего яйца" class="illustration">
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-pair">
+            <div class="page left-page">
+                <div class="page-content">
+                    <div class="page-title">Запись 4</div>
+                    <p>Проклятье! Появились какие-то авантюристы. Они шныряют повсюду, мешая нашим планам. Фрулам доложила, что они напали на лагерь. Я приказала ей усилить охрану и отправить Лангдедросу разобраться с ними. Если он не справится, я сама вмешаюсь. Тиамат требует жертв, и я не позволю этим смертным разрушить наши планы.</p>
+                </div>
+            </div>
+            <div class="page right-page">
+                <div class="illustration-container">
+                    <img src="https://psv4.userapi.com/s/v1/d2/WSpzIvoP_FqvkqjAKEsSJlF63HtE54ES2dLchmEIEOzus_qifHZm6S9AS0LoPWnx9IxLzsl0doRGXaVEPPK-2QhiZzUVrIehuJYoo6PZyHM6hu4F7utNxSskL8mlLVxrt6ms79mAwzDf/4.png" alt="Иллюстрация авантюристов" class="illustration">
+                </div>
+            </div>
+        </div>
+
+        <div class="page-pair">
+            <div class="page left-page">
+                <div class="page-content">
+                    <div class="page-title">Запись 5</div>
+                    <p>Лангдедроса мертв. Фрулам сбежала, как трусливая крыса. Кладка яиц уничтожена. Это катастрофа! Я чувствую гнев Тиамат в своих венах. Эти авантюристы станут моими личными врагами. Я отправлюсь в Замок Неритар, чтобы восстановить контроль. Северин должен узнать об этом, но я не могу показать слабость. Нужно ускорить сбор сокровищ.</p>
+                </div>
+            </div>
+            <div class="page right-page">
+                <div class="illustration-container">
+                    <img src="https://psv4.userapi.com/s/v1/d2/1pzh-7ZqhQ70brsm44q165yc-34_tzjtxID3f4YODlL6KbEvG19gykJ0x58Wmo-jeRoH7F_mfG1s0Tv_3XyOvQ9HMcWq-hahZ3avkKEsIbWOefMfs4CjRj2ajlzBg6Lvr9z2bkGMrNVS/5.png" alt="Иллюстрация разрушенных яиц" class="illustration">
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-pair">
+            <div class="page left-page">
+                <div class="page-content">
+                    <div class="page-title">Запись 6</div>
+                    <p>Северин вызвал меня в Храм Тиамат. Он говорит, что ритуал близок, но нам нужно больше силы. Потеря кладки — удар, но не конец. Я нашла новый способ укрепить нашу позицию. Артефакт в болотах. Авантюристы все еще идут по моему следу. Я прикажу культистам устроить засаду.</p>
+                </div>
+            </div>
+            <div class="page right-page">
+                <div class="illustration-container">
+                    <img src="https://psv4.userapi.com/s/v1/d2/vgUjwu5TUSaZ6KzIMl-LKD-xmQWIYdj_g_b7vLBxYFyWiaxpr1Jyfyi9THMFvg43LNgluEltJSLYBmouyBRcXRnI_QlRnK1X3na9prn2S__glXDk15wI39vD__VC8l7vmfBBQoL4Il4H/6.png" alt="Иллюстрация храма Тиамат" class="illustration">
+                </div>
+            </div>
+        </div>
+
+        <div class="page-pair">
+            <div class="page left-page">
+                <div class="page-content">
+                    <div class="page-title">Запись 7</div>
+                    <p>Замок Неритар под моим контролем, но я чувствую, что время уходит. Северин настаивает на ускорении планов. Я отправила гонцов к другим Вирмспикерам, чтобы скоординировать наши действия. Если авантюристы доберутся до меня, они встретят свою смерть. Черная маска Тиамат на мне, и я готова к битве. Пусть попробуют остановить волю Королевы Драконов.</p>
+                </div>
+            </div>
+            <div class="page right-page">
+                <div class="illustration-container">
+                    <img src="https://psv4.userapi.com/s/v1/d2/kcbwy9w6Qxl9SgMrKIWZWI_5leCkNFOG-CFX4Kdcu_YIRuypPT6ExY-KMq9z3m9BF3OP1ZZvvMJE0BlVL2xl0kiwusMGyJN0-CnxfREecK35IqirXlU7MaVg1CZPiLmR05W8WW0znx8r/7.png" alt="Иллюстрация чёрной маски" class="illustration">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="nav-buttons">
+        <button class="nav-btn prev-btn" disabled>◀</button>
+        <button class="nav-btn next-btn">▶</button>
+    </div>
+</div>
+
+<script>
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const pagePairs = document.querySelectorAll('.page-pair');
+    let currentPage = 0;
+    const totalPages = pagePairs.length;
+
+    nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (currentPage < totalPages - 1) {
+            pagePairs[currentPage].classList.remove('active');
+            currentPage++;
+            pagePairs[currentPage].classList.add('active');
+            updateButtons();
+        }
+    });
+
+    prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (currentPage > 0) {
+            pagePairs[currentPage].classList.remove('active');
+            currentPage--;
+            pagePairs[currentPage].classList.add('active');
+            updateButtons();
+        }
+    });
+
+    function updateButtons() {
+        prevBtn.disabled = currentPage === 0;
+        nextBtn.disabled = currentPage === totalPages - 1;
+    }
+</script>
+
+</body>
+</html>

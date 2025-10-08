@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дневник Сандесиль Моргии</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+		@import url('https://fonts.googleapis.com/css2?family=Bad+Script&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Comforter+Brush&display=swap');
+
+        body {
+            background-color: #333;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Cormorant Garamond', serif;
+            color: #1e1e1e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .book {
+            width: 1080px;
+            height: 920px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+            box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .book-cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.okcdn.ru/videoPreview?id=7439131282098&type=39&idx=0&tkn=Pg4WZCBljfdvwmDdea1d2ZBthL4&fn=w_548'); /* Обложка книги */
+            background-size: cover;
+            background-position: center;
+            border-radius: 5px;
+            z-index: 10;
+            backface-visibility: hidden;
+            transform-origin: left;
+            transition: transform 1s;
+        }
+
+        .book:hover .book-cover {
+            transform: rotateY(-180deg);
+        }
+
+        .book-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            backface-visibility: hidden;
+            transform: rotateY(-180deg);
+        }
+
+        .book:hover .book-content {
+            transform: rotateY(0deg);
+        }
+
+        .page-pair {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .page-pair.active {
+            opacity: 1;
+            z-index: 1;
+        }
+        
+        .page {
+            width: 50%;
+            height: 100%;
+            background-color: #f8f0e3;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            box-sizing: border-box;
+            line-height: 1.6;
+            overflow-y: auto;
+        }
+
+        .left-page {
+            border-right: 1px solid #d4c5b3;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+
+        .right-page {
+            border-left: 1px solid #d4c5b3;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        .page-content {
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7);
+            font-size: 1.1em;
+        }
+
+        .page-title {
+            text-align: right;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        /* Styles for different stages of the diary */
+        .page-1, .page-2, .page-3 {
+            background-image: url('https://i.pinimg.com/originals/f2/58/14/f258140582ce9fb7dfa524cd06a8b290.jpg'); /* Чистые страницы */
+            background-size: cover;
+            background-position: center;
+            font-family: 'Great Vibes', serif;
+			font-size: 30px;
+        }
+        
+        .page-4, .page-5, .page-6 {
+            background-image: url('https://wallpapers.com/images/hd/crumpled-brown-old-paper-zad6w1f2c6xjwcpa.jpg'); /* Потрепанные страницы */
+            background-size: cover;
+            background-position: center;
+            font-family: 'Bad Script', serif;
+            
+            opacity: 0.95;
+			font-size: 30px;
+        }
+
+        .page-7, .page-8, .page-9 {
+            background-image: url('https://i.pinimg.com/736x/09/6c/03/096c0309e6a9c0a5f7778f6fcf83e0ce.jpg'); /* Страницы с кровью */
+            background-size: cover;
+            background-position: center;
+            font-family: 'Comforter Brush', cursive;
+            
+            opacity: 0.9;
+			font-size: 30px;
+        }
+        
+        .page-10, .page-11, .page-12 {
+            background-image: url('https://sarahlunasite.wordpress.com/wp-content/uploads/2018/01/depositphotos_108604476-stock-photo-dark-faded-paper-with-red.jpg'); /* Еще больше крови и повреждений */
+            background-size: cover;
+            background-position: center;
+            font-family: 'Comforter Brush', cursive;
+            
+            opacity: 0.85;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            font-size: 1.2em;
+			font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="book">
+    <div class="book-cover"></div>
+    <div class="book-content">
+        <div class="page-pair active">
+            <div class="page left-page page-1">
+                <div class="page-content">
+                    <div class="page-title">Хаммер</div>
+                    <p>Сегодняшний день в культе прошел как обычно – ритуалы в честь драконов, шепотом передаваемые пророчества о грядущем величии. Я, Сандесиль Моргия, все еще верю в нашу миссию, но смена власти... Этот новый лидер, Северин, с его видениями о Тиамат... Он обещает эру, где драконы правят, а мы – их верные слуги. Раньше, при старом порядке, все было о поклонении нежити-драконам, о балансе. Теперь же фокус на богине драконов – это вдохновляет, но и пугает. Некоторые шепчут о предательстве традиций, но я вижу в этом шанс на возвышение. Мои обязанности в храме – следить за новичками, обучать их тайнам. Вечером медитировала у алтаря, чувствуя силу древних чешуй.</p>
+                </div>
+            </div>
+            <div class="page right-page page-2">
+                <div class="page-content">
+                    <div class="page-title">Альтуриак</div>
+                    <p>Холод пронизывает кости, но культ греет душу. Собрания становятся чаще – Северин требует лояльности, и я отдаю ее без сомнений. Старые жрецы ворчат о потере пути, о том, как Тиамат затмит наших драконьих повелителей. Я же думаю, что это эволюция. Моя жизнь течет ровно: днем – расшифровка свитков, ночью – охота на еретиков в тенях Фаэруна. Чувствую прилив сил, словно сама богиня шепчет мне. Сегодня помогла в ритуале призыва, и кровь жертвы казалась такой... живой.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-pair">
+            <div class="page left-page page-3">
+                <div class="page-content">
+                    <div class="page-title">Чес</div>
+                    <p>Весна будит землю, но в культе – буря перемен. Северин укрепил власть, казнив несогласных. Я одобряю – слабость не место среди нас. Мои дни заполнены тренировками, изучением артефактов для грядущей войны. Отношение к смене? Это благо. Старый культ застаивался, как болото в Чес. Теперь мы – шторм. Ночью приснился сон о крыльях, о полете над Фаэруном. Проснулась с жаждой, странной, но приятной.</p>
+                </div>
+            </div>
+            <div class="page right-page page-4">
+                <div class="page-content">
+                    <div class="page-title">Тарсах</div>
+                    <p>Штормы Тарсаха отражают хаос в моей душе. Что-то меняется. После последнего ритуала, где мы призывали тень дракона, я почувствовала укус – невидимый, но реальный. Кровь в жилах горит, дни сливаются в вечный голод. Культ процветает под Северином, его видения о Тиамат вдохновляют, но я... Я вижу тени по-другому. Они зовут. Мои записи – оплот ясности, но мысли путаются. Жажда растет.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-pair">
+            <div class="page left-page page-5">
+                <div class="page-content">
+                    <div class="page-title">Миртул</div>
+                    <p>Таяние снегов, но во мне – ледяной огонь. Превращение началось. Тот укус... от повелителя теней, вампира из наших рядов. Он выбрал меня для "дара". Дни – мука: солнце жжет кожу, еда отвращает. Ночью сила бурлит, глаза видят в темноте. Культ? Северин – гений, его смена власти сделала нас сильнее, но теперь я жажду большего. Крови. Тени шепчут секреты Тиамат. Я стану ее клинком в ночи.</p>
+                </div>
+            </div>
+            <div class="page right-page page-6">
+                <div class="page-content">
+                    <div class="page-title">Киторн</div>
+                    <p>Цветы Киторна – маска для моей тьмы. Превращение ускоряется. Клыки растут, сердце бьется реже. Дневной свет – пытка, прячусь в склепах культа. Отношение к власти? Северин – инструмент, Тиамат – истинная царица. Но голод... Он правит мной. Убила сегодня – не жертву, а союзника, по прихоти. Кровь сладка, как нектар. Мысли темнеют, дневник – якорь в безумии. Тени танцуют.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-pair">
+            <div class="page left-page page-7">
+                <div class="page-content">
+                    <div class="page-title">Флеймрул</div>
+                    <p>Жар Флеймрула – ничто по сравнению с огнем во мне. Я – почти тварь ночи. Культ использует мою новую силу: шпионаж, убийства в тенях. Смена власти? Она привела к этому – к моему возрождению. Но жажда пожирает разум. Сны о крови, о крыльях летучих мышей. Пишу дрожащей рукой, слова ускользают. Тьма зовет, Тиамат смеется.</p>
+                </div>
+            </div>
+            <div class="page right-page page-8">
+                <div class="page-content">
+                    <div class="page-title">Элесиас</div>
+                    <p>Высокое солнце жжет, но я – ночь. Превращение завершено? Сердце остановилось, но я живу. Культ – стая, Северин – вожак, но я выше. Голод вечен. Кровь... кровь... тени шепчут имена. Фаэрун – охотничьи угодья. Мысли рвутся, как паутина.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-pair">
+            <div class="page left-page page-9">
+                <div class="page-content">
+                    <div class="page-title">Элейнт</div>
+                    <p>Увядание. Тени сливаются. Жажда. Клыки в плоти. Тиамат... кровь... крылья в ночи. Разум уходит. Культ? Власть? Пепел.</p>
+                </div>
+            </div>
+            <div class="page right-page page-10">
+                <div class="page-content">
+                    <div class="page-title">Марпенот</div>
+                    <p>Листья падают. Кровь течет. Тени жрут. Я – монстр. Шепот... голод... тьма.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-pair">
+            <div class="page left-page page-11">
+                <div class="page-content">
+                    <div class="page-title">Уктар</div>
+                    <p>Гниение. Кровавые реки. Зов бездны. Слова... теряются... в вечном голоде.</p>
+                </div>
+            </div>
+            <div class="page right-page page-12">
+                <div class="page-content">
+                    <div class="page-title">Найтол</div>
+                    <p>Тьма опускается. Я – тень. Кровь. Только кровь.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const book = document.querySelector('.book');
+    const pagePairs = document.querySelectorAll('.page-pair');
+    let currentPage = 0;
+
+    book.addEventListener('click', () => {
+        pagePairs[currentPage].classList.remove('active');
+        currentPage = (currentPage + 1) % pagePairs.length;
+        pagePairs[currentPage].classList.add('active');
+    });
+
+</script>
+
+</body>
+</html>
